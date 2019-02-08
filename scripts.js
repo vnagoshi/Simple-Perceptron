@@ -15,7 +15,8 @@ function runPerceptron() {
     [new Vector(0, -1, 0), -1],
     [new Vector(1, -1, 0), 1],
     [new Vector(-1, 0, 0), -1],
-    [new Vector(0, -1, 0), -1]
+    [new Vector(0, 1), 1]
+    
   ];
   
   console.log("---------");
@@ -40,7 +41,8 @@ function runPerceptron() {
     console.log("----------")
   } while (rerun);
   
-  console.log("Training Complete")
+  console.log("Training Complete");
+  graphAxis();
   graphWeight();
   graphData(trainingData);
 }
@@ -59,6 +61,34 @@ function graph() {
   
 }
 
+function graphAxis() {
+  let xOrigin = 500/2;
+  let yOrigin = 500/2;
+  let xMax = 5, xMin = -5;
+  let yMax = 5, yMin = -5;
+  ctx.strokeStyle = "#000";
+  ctx.beginPath();
+  ctx.moveTo(xOrigin, 0);
+  ctx.lineTo(xOrigin, 500);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(0, yOrigin);
+  ctx.lineTo(500, yOrigin);
+  ctx.stroke();
+  for(let i = 0; i < 12; i++) {
+    ctx.beginPath();
+    ctx.moveTo(xOrigin, yOrigin);
+    ctx.arc(500 / 10 * i , yOrigin, 2, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+  for(let i = 0; i < 12; i++) {
+    ctx.beginPath();
+    ctx.moveTo(xOrigin, yOrigin);
+    ctx.arc(xOrigin, 500 / 10 * i , 2, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+}
+
 function graphWeight() {
   let xMax = 5, xMin = -5;
   let yMax = 5, yMin = -5;
@@ -67,7 +97,7 @@ function graphWeight() {
   let yOrigin = 500/2
   ctx.strokeStyle= "#00f"
   ctx.moveTo(xOrigin, yOrigin);
-  ctx.lineTo(weightVector.x / xMax * 500 / 2 + xOrigin, weightVector.y / yMax * 500 / 2 + yOrigin);
+  ctx.lineTo(weightVector.x / xMax * 500 / 2 + xOrigin, weightVector.y / yMax * 500 / -2 + yOrigin);
   ctx.stroke();
   ctx.strokeStyle= "#000"
   let temp;
@@ -82,7 +112,7 @@ function graphData(data) {
     data[i][1] == 1 ? ctx.fillStyle = "#f0f" : ctx.fillStyle = "#0f0";
     ctx.beginPath();
     ctx.moveTo(xOrigin, yOrigin);
-    ctx.arc(data[i][0].x / xMax * 500 / 2 + xOrigin, data[i][0].y / yMax * 500 / 2 + yOrigin, 2, 0, 2 * Math.PI);
+    ctx.arc(data[i][0].x / xMax * 500 / 2 + xOrigin, data[i][0].y / yMax * 500 / -2 + yOrigin, 3, 0, 2 * Math.PI);
     ctx.fill(); 
   }
   ctx.fillStyle = "#000";
