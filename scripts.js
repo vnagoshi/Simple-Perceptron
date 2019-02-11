@@ -3,8 +3,14 @@ let ctx;
 let weightVector;
 
 function runPerceptron() {
-  weightVector = new Vector(0,0,0);
-  const learningRate = 0.5;
+  //weightVector = new Vector(0,0,0);
+  //const learningRate = 0.5;
+    
+  weight_v_x = Number(document.getElementById("w_v_x").value);
+  weight_v_y = Number(document.getElementById("w_v_y").value);  
+  weightVector = new Vector(weight_v_x,weight_v_y,0);
+  const learningRate = Number(document.getElementById("learningRate").value);
+    
   console.log(weightVector);
   
   let rerun = false;
@@ -44,7 +50,9 @@ function runPerceptron() {
   console.log("Training Complete");
   graphAxis();
   graphWeight();
+  graphPerpendicularWeight();
   graphData(trainingData);
+  
 }
 
 //TODO
@@ -103,6 +111,38 @@ function graphWeight() {
   let temp;
 }
 
+function graphPerpendicularWeight() {
+  let xMax = 5, xMin = -5;
+  let yMax = 5, yMin = -5;
+  ctx.beginPath();
+  let xOrigin = 500/2;
+  let yOrigin = 500/2
+  ctx.strokeStyle= "#f00"
+  ctx.moveTo(xOrigin, yOrigin);
+
+  let xPerp = -weightVector.y * (Math.sqrt( (10*(weightVector.x)**2) / (weightVector.x**2 + weightVector.y**2) )) / weightVector.x
+  let yPerp = Math.sqrt( (10*(weightVector.x**2)) / (weightVector.x**2 + weightVector.y**2) )
+    
+  ctx.lineTo(xPerp / xMax * 500 / 2 + xOrigin, yPerp / yMax * 500 / -2 + yOrigin);
+    
+  ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin, -yPerp / yMax * 500 / -2 + yOrigin);
+  ctx.stroke();
+  ctx.strokeStyle= "#000"
+  let temp;   
+  
+    
+  dotProd = (weightVector.x * xPerp) + (weightVector.y * yPerp)
+  mag_weight_vector = Math.sqrt(weightVector.x**2 + weightVector.y**2)
+  mag_perp_vector = Math.sqrt(xPerp**2 + yPerp**2)
+  angleBetweenVectors = Math.acos(dotProd / (mag_perp_vector*mag_weight_vector))
+  console.log("angle between vectors is: " + angleBetweenVectors * 180 / Math.PI)
+}
+
+function computePerpendicularWeightVector() {
+
+    
+}
+
 function graphData(data) {
   let xMax = 5, xMin = -5;
   let yMax = 5, yMin = -5;
@@ -120,7 +160,7 @@ function graphData(data) {
 
 window.onload = function() {
   ctx = document.getElementById("ctx").getContext("2d");
-  runPerceptron();
+  //runPerceptron();
   
 
 }
