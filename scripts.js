@@ -5,23 +5,24 @@ let weightVector;
 function runPerceptron() {
   //weightVector = new Vector(0,0,0);
   //const learningRate = 0.5;
-    
+  
   weight_v_x = Number(document.getElementById("w_v_x").value);
   weight_v_y = Number(document.getElementById("w_v_y").value);  
   weightVector = new Vector(weight_v_x,weight_v_y,0);
   const learningRate = Number(document.getElementById("learningRate").value);
+  bias = Number(document.getElementById("bias").value);
     
   console.log(weightVector);
   
   let rerun = false;
   let iterations = 0;  //Tracks number of times the training data is run through. Used to determine stopping if data seems not linearly separable
   let trainingData = [
-    [new Vector(1, 1, 0), 1],
+    [new Vector(2, 1.5, 0), 1],
     [new Vector(-1, -1, 0), -1],
-    [new Vector(0, -1, 0), -1],
-    [new Vector(1, -1, 0), 1],
-    [new Vector(-1, 0, 0), -1],
-    [new Vector(0, 1), 1]
+    [new Vector(1, 1, 0), -1],
+    [new Vector(0, 3, 0), 1],
+    [new Vector(-1, 1.5, 0), -1],
+    [new Vector(0, 2), 1]
     
   ];
   
@@ -31,7 +32,7 @@ function runPerceptron() {
     for(let i = 0; i < trainingData.length; i++) {
       console.log("training Input: " + trainingData[i][0].x + ", " + trainingData[i][0].y);
       console.log("Correct Label : " + trainingData[i][1])
-      let dotProduct = weightVector.dot(trainingData[i][0]);
+      let dotProduct = weightVector.dot(trainingData[i][0]) + bias;
       console.log("Dot Product   : " + dotProduct);
       let outputLabel = dotProduct > 0 ? 1 : -1;
       console.log("Output Label  : " + outputLabel);
@@ -39,6 +40,8 @@ function runPerceptron() {
       weightVector = weightVector.add(trainingData[i][0].multiply(learningRate).multiply(trainingData[i][1] - outputLabel));
       console.log("Weight Vector :" + weightVector.x + ", " + weightVector.y);
       
+      bias = bias + learningRate*(trainingData[i][1] - outputLabel)
+        
       if(outputLabel != trainingData[i][1]) {
         rerun = true;
       }
@@ -119,13 +122,22 @@ function graphPerpendicularWeight() {
   let yOrigin = 500/2
   ctx.strokeStyle= "#f00"
   ctx.moveTo(xOrigin, yOrigin);
-
-  let xPerp = -weightVector.y * (Math.sqrt( (10*(weightVector.x)**2) / (weightVector.x**2 + weightVector.y**2) )) / weightVector.x
-  let yPerp = Math.sqrt( (10*(weightVector.x**2)) / (weightVector.x**2 + weightVector.y**2) )
-    
+ 
+  let xPerp = 0
+  let yPerp = 0
+  if(weightVector.x != 0){
+      xPerp = -weightVector.y * (Math.sqrt( (10*(weightVector.x)**2) / (weightVector.x**2 + weightVector.y**2) )) / weightVector.x
+      yPerp = Math.sqrt( (10*(weightVector.x**2)) / (weightVector.x**2 + weightVector.y**2) )
+  }else{
+      xPerp = 1;
+      yPerp = 0;
+  }
   ctx.lineTo(xPerp / xMax * 500 / 2 + xOrigin, yPerp / yMax * 500 / -2 + yOrigin);
-    
-  ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin, -yPerp / yMax * 500 / -2 + yOrigin);
+  if(weightVector.x !=0){    
+    ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin, -yPerp / yMax * 500 / -2 + yOrigin);
+  }else{
+    ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin, yPerp / yMax * 500 / -2 + yOrigin);
+  }
   ctx.stroke();
   ctx.strokeStyle= "#000"
   let temp;   
@@ -135,6 +147,8 @@ function graphPerpendicularWeight() {
   mag_weight_vector = Math.sqrt(weightVector.x**2 + weightVector.y**2)
   mag_perp_vector = Math.sqrt(xPerp**2 + yPerp**2)
   angleBetweenVectors = Math.acos(dotProd / (mag_perp_vector*mag_weight_vector))
+  console.log("bias is: " + bias);
+  console.log("perp line x is: " + xPerp + " y is: " + yPerp);
   console.log("angle between vectors is: " + angleBetweenVectors * 180 / Math.PI)
 }
 
@@ -160,7 +174,7 @@ function graphData(data) {
 
 window.onload = function() {
   ctx = document.getElementById("ctx").getContext("2d");
-  //runPerceptron();
+  runPerceptron();
   
 
 }
