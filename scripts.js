@@ -15,7 +15,10 @@ function runPerceptron() {
     [new Vector(0, -1, 0), -1],
     [new Vector(1, -1, 0), 1],
     [new Vector(-1, 0, 0), -1],
-    [new Vector(0, 1), 1]
+    [new Vector(0, 1, 0), 1],
+    [new Vector(-1, 1, 0), -1],
+    [new Vector(1, 0, 0), 1],
+    [new Vector(-0.5, 4, 0), -1]
     
   ];
   
@@ -38,13 +41,16 @@ function runPerceptron() {
       }
     }
     iterations++;
-    console.log("----------")
+    console.log("----------");
+    if(iterations >= 10000) {
+      console.log("ERROR: Weight Vector not found in 10000 passes. Data assumed unseparable.");
+      break;
+    }
   } while (rerun);
   
   console.log("Training Complete");
-  graphAxis();
-  graphWeight();
-  graphData(trainingData);
+
+  graph(trainingData);
 }
 
 //TODO
@@ -57,8 +63,11 @@ function testPercceptron(testData) {
   
 }
 
-function graph() {
-  
+function graph(data) {
+  ctx.clearRect(0,0,500,500);
+  graphAxis();
+  graphWeight();
+  graphData(data);
 }
 
 function graphAxis() {
