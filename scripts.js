@@ -29,11 +29,13 @@ function runPerceptron() {
   
   let rerun = false;
   let iterations = 0;  //Tracks number of times the training data is run through. Used to determine stopping if data seems not linearly separable
-
+  
+  let total_errors = [];
   
   console.log("---------");
   do {
     rerun = false;
+    let num_errors = 0;
     for(let i = 0; i < trainingData.length; i++) {
       console.log("training Input: " + trainingData[i][0].x + ", " + trainingData[i][0].y);
       console.log("Correct Label : " + trainingData[i][1])
@@ -49,12 +51,17 @@ function runPerceptron() {
         
       if(outputLabel != trainingData[i][1]) {
         rerun = true;
+        num_errors++;
       }
     }
+    total_errors.push(num_errors/trainingData.length);
     iterations++;
     console.log("----------")
-  } while (rerun);
-  
+  } while (rerun && iterations < 10000);
+  if(!rerun){
+     graph_errors("graph_errors", total_errors);   
+  }
+    
   console.log("Training Complete");
   ctx.clearRect(goToX-250, goToY-250, goToX+250, goToY+250);
   graphAxis();
