@@ -161,11 +161,11 @@ function graphPerpendicularWeight() {
       yPerp = 0;
   }
     
-  ctx.lineTo(xPerp / xMax * 500 / 2 + xOrigin  + (bias/5*250/3), yPerp / yMax * 500 / -2 + yOrigin);
+  ctx.lineTo(xPerp / xMax * 5000 / 2 + xOrigin  + (bias/5*250/3), yPerp / yMax * 5000 / -2 + yOrigin);
   if(weightVector.x !=0){    
-    ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin + (bias/5*250/3), -yPerp / yMax * 500 / -2 + yOrigin);
+    ctx.lineTo(-xPerp / xMax * 5000 / 2 + xOrigin + (bias/5*250/3), -yPerp / yMax * 5000 / -2 + yOrigin);
   }else{
-    ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin + (bias/5*250/3), yPerp / yMax * 500 / -2 + yOrigin);
+    ctx.lineTo(-xPerp / xMax * 5000 / 2 + xOrigin + (bias/5*250/3), yPerp / yMax * 5000 / -2 + yOrigin);
   }
   ctx.stroke();
   ctx.strokeStyle= "#000"
