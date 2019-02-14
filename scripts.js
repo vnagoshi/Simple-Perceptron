@@ -6,12 +6,15 @@ let goToY = 0;
 let xPerp = 0;
 let yPerp = 0;
 let trainingData = [
-    [new Vector(2, 1.5, 0), 1],
-    [new Vector(-1, -1, 0), -1],
-    [new Vector(1, 1, 0), -1],
-    [new Vector(0, 3, 0), 1],
-    [new Vector(-1, 1.5, 0), -1],
-    [new Vector(0, 2), 1]
+    [new Vector(-1, 1.5, 0), 1],
+    [new Vector(4, 3, 0), -1],
+    [new Vector(2, 3, 0), -1],
+    [new Vector(-1.5, -4, 0), 1],
+    [new Vector(-2, 3, 0), -1],
+    [new Vector(4, 2), 1],
+    [new Vector(-1, 2), 1],
+    [new Vector(2, -2), 1],
+    [new Vector(4.5, 3), -1]
     
   ];
       
@@ -57,13 +60,13 @@ function runPerceptron() {
     total_errors.push(num_errors/trainingData.length);
     iterations++;
     console.log("----------")
-  } while (rerun && iterations < 10000);
-  if(!rerun){
-     graph_errors("graph_errors", total_errors);   
+  } while (rerun && iterations < 5000);
+  if(rerun){       
+      console.log("failure");
   }
-    
+  graph_errors("graph_errors", total_errors);    
   console.log("Training Complete");
-  ctx.clearRect(goToX-250, goToY-250, goToX+250, goToY+250);
+  ctx.clearRect(0, 0, 500, 500);
   graphAxis();
   graphWeight();
   graphPerpendicularWeight();
@@ -154,8 +157,8 @@ function graphPerpendicularWeight() {
       xPerp = -weightVector.y * (Math.sqrt( (10*(weightVector.x)**2) / (weightVector.x**2 + weightVector.y**2) )) / weightVector.x
       yPerp = Math.sqrt( (10*(weightVector.x**2)) / (weightVector.x**2 + weightVector.y**2) )
   }else{
-      xPerp = 1 + xOffset;
-      yPerp = 0 + yOffset;
+      xPerp = 5;
+      yPerp = 0;
   }
     
   ctx.lineTo(xPerp / xMax * 500 / 2 + xOrigin, yPerp / yMax * 500 / -2 + yOrigin);
