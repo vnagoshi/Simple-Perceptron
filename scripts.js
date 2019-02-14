@@ -5,6 +5,16 @@ let goToX = 0;
 let goToY = 0;
 let xPerp = 0;
 let yPerp = 0;
+let trainingData = [
+    [new Vector(2, 1.5, 0), 1],
+    [new Vector(-1, -1, 0), -1],
+    [new Vector(1, 1, 0), -1],
+    [new Vector(0, 3, 0), 1],
+    [new Vector(-1, 1.5, 0), -1],
+    [new Vector(0, 2), 1]
+    
+  ];
+      
 
 function runPerceptron() {
   //weightVector = new Vector(0,0,0);
@@ -19,16 +29,7 @@ function runPerceptron() {
   
   let rerun = false;
   let iterations = 0;  //Tracks number of times the training data is run through. Used to determine stopping if data seems not linearly separable
-  let trainingData = [
-    [new Vector(2, 1.5, 0), 1],
-    [new Vector(-1, -1, 0), -1],
-    [new Vector(1, 1, 0), -1],
-    [new Vector(0, 3, 0), 1],
-    [new Vector(-1, 1.5, 0), -1],
-    [new Vector(0, 2), 1]
-    
-  ];
-      
+
   
   console.log("---------");
   do {
@@ -55,6 +56,7 @@ function runPerceptron() {
   } while (rerun);
   
   console.log("Training Complete");
+  ctx.clearRect(goToX-250, goToY-250, goToX+250, goToY+250);
   graphAxis();
   graphWeight();
   graphPerpendicularWeight();
@@ -110,6 +112,20 @@ function graphWeight() {
   ctx.beginPath();
   let xOrigin = 500/2;
   let yOrigin = 500/2
+  ctx.strokeStyle= "#00f"
+  ctx.moveTo(xOrigin, yOrigin);
+  ctx.lineTo(weightVector.x / xMax * 500 / 2 + xOrigin, weightVector.y / yMax * 500 / -2 + yOrigin);
+  ctx.stroke();
+  ctx.strokeStyle= "#000"
+  let temp;
+}
+
+function updateGraphWeight() {
+  let xMax = 5, xMin = -5;
+  let yMax = 5, yMin = -5;
+  ctx.beginPath();
+  xOrigin = goToX;
+  yOrigin = goToY;
   ctx.strokeStyle= "#00f"
   ctx.moveTo(xOrigin, yOrigin);
   ctx.lineTo(weightVector.x / xMax * 500 / 2 + xOrigin, weightVector.y / yMax * 500 / -2 + yOrigin);

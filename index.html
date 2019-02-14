@@ -26,12 +26,15 @@
       document.onmousedown = handleMouseDown(event);
       function handleMouseDown(event){
       let center = 500/2;
-      
+      ctx.clearRect(goToX-250, goToY-250, goToX+250, goToY+250);
       goToX=event.clientX - document.getElementById("ctx").getBoundingClientRect().left;
       goToY=event.clientY-document.getElementById("ctx").getBoundingClientRect().top;
       console.log("x: " + goToX);
       console.log("y: " + goToY);
       updatePerpendicularWeight();
+      updateGraphWeight();
+      graphAxis();
+      graphData(trainingData);
          
      }
   </script>
