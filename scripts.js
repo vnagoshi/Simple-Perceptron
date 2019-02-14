@@ -10,8 +10,8 @@ let trainingData = [
     [new Vector(4, 3, 0), -1],
     [new Vector(2, 3, 0), -1],
     [new Vector(-1.5, -4, 0), 1],
-    [new Vector(-2, 3, 0), -1],
-    [new Vector(4, 2), 1],
+    [new Vector(-2, 3, 0), 1],
+    [new Vector(4, 2), -1],
     [new Vector(-1, 2), 1],
     [new Vector(2, -2), 1],
     [new Vector(4.5, 3), -1]
@@ -123,8 +123,8 @@ function graphWeight() {
   let xOrigin = 500/2;
   let yOrigin = 500/2
   ctx.strokeStyle= "#00f"
-  ctx.moveTo(xOrigin, yOrigin);
-  ctx.lineTo(weightVector.x / xMax * 500 / 2 + xOrigin, weightVector.y / yMax * 500 / -2 + yOrigin);
+  ctx.moveTo(xOrigin + (bias/5*250/3), yOrigin);
+  ctx.lineTo(weightVector.x / xMax * 500 / 2 + xOrigin + (bias/5*250/3), weightVector.y / yMax * 500 / -2 + yOrigin);
   ctx.stroke();
   ctx.strokeStyle= "#000"
   let temp;
@@ -151,7 +151,7 @@ function graphPerpendicularWeight() {
   let xOrigin = 500/2;
   let yOrigin = 500/2
   ctx.strokeStyle= "#f00"
-  ctx.moveTo(xOrigin, yOrigin);
+  ctx.moveTo(xOrigin + (bias/5*250/3), yOrigin);
 
   if(weightVector.x != 0){
       xPerp = -weightVector.y * (Math.sqrt( (10*(weightVector.x)**2) / (weightVector.x**2 + weightVector.y**2) )) / weightVector.x
@@ -161,11 +161,11 @@ function graphPerpendicularWeight() {
       yPerp = 0;
   }
     
-  ctx.lineTo(xPerp / xMax * 500 / 2 + xOrigin, yPerp / yMax * 500 / -2 + yOrigin);
+  ctx.lineTo(xPerp / xMax * 500 / 2 + xOrigin  + (bias/5*250/3), yPerp / yMax * 500 / -2 + yOrigin);
   if(weightVector.x !=0){    
-    ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin, -yPerp / yMax * 500 / -2 + yOrigin);
+    ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin + (bias/5*250/3), -yPerp / yMax * 500 / -2 + yOrigin);
   }else{
-    ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin, yPerp / yMax * 500 / -2 + yOrigin);
+    ctx.lineTo(-xPerp / xMax * 500 / 2 + xOrigin + (bias/5*250/3), yPerp / yMax * 500 / -2 + yOrigin);
   }
   ctx.stroke();
   ctx.strokeStyle= "#000"
