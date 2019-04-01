@@ -1,10 +1,13 @@
 
 let ctx;
 let weightVector;
+let bias;
 let goToX = 0;
 let goToY = 0;
 let xPerp = 0;
 let yPerp = 0;
+let training = true;
+/*
 let trainingData = [
     [new Vector(-1, 1.5, 0), 1],
     [new Vector(4, 3, 0), -1],
@@ -17,9 +20,14 @@ let trainingData = [
     [new Vector(4.5, 3), -1]
     
   ];
-      
+*/
+let trainingData = [];
+let testingData = [];
 
 function runPerceptron() {
+  training = true;
+  training_size = Number(document.getElementById("training_size").value);
+  trainingData = create_data(training_size)
   //weightVector = new Vector(0,0,0);
   //const learningRate = 0.5;
   weight_v_x = Number(document.getElementById("w_v_x").value);
@@ -80,8 +88,28 @@ function trainPerceptron(trainingData) {
 }
 
 //TODO
-function testPercceptron(testData) {
-  
+function testPerceptron() {
+    training = false;
+    testing_size = Number(document.getElementById("testing_size").value);
+    testingData = create_data(testing_size)
+    console.log("testing perceptron");
+    let numb_correct = 0;
+    for(let i=0; i<testing_size; i++){
+        let dotProduct = weightVector.dot(testingData[i][0]) + bias;
+        let outputLabel = dotProduct > 0 ? 1 : -1;
+        if(outputLabel == testingData[i][1]){
+            numb_correct++;
+        }
+    }
+    let percent_correct = numb_correct / testingData.length;
+    let output_percent = document.getElementById("percent_correct")
+    output_percent.innerHTML = "Percent Correct: " + percent_correct*100; 
+    console.log("finished testing perceptron");
+    ctx.clearRect(0, 0, 500, 500);
+    graphAxis();
+    graphWeight();
+    graphPerpendicularWeight();
+    graphData(testingData);
 }
 
 function graph() {
@@ -221,6 +249,32 @@ function graphData(data) {
   ctx.fillStyle = "#000";
 }
 
+function create_data(data_points){
+    let points = []
+    for(let i =0; i<data_points; i++){    
+        x = (10*Math.random()) - 5
+        y = (10*Math.random()) - 5
+        points.push([new Vector(x, y, 0), 0])
+    }
+    data = make_labels(points);
+    return data;
+}
+
+function make_labels(data){
+    let labeled_data = data
+    for(let i=0; i<data.length; i++){
+        
+        let x = data[i][0].x;
+        let y = data[i][0].y;
+        
+        if(x >= y) {
+            data[i][1] = 1
+        }else{
+            data[i][1] = -1
+        }
+    }
+    return labeled_data;
+}
 
 window.onload = function() {
   ctx = document.getElementById("ctx").getContext("2d");
