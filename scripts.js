@@ -7,27 +7,27 @@ let goToY = 0;
 let xPerp = 0;
 let yPerp = 0;
 let training = true;
-/*
+
 let trainingData = [
-    [new Vector(-1, 1.5, 0), 1],
-    [new Vector(4, 3, 0), -1],
+    [new Vector(-1, 1.5, 0), -1],
+    [new Vector(4, 3, 0), 1],
     [new Vector(2, 3, 0), -1],
     [new Vector(-1.5, -4, 0), 1],
-    [new Vector(-2, 3, 0), 1],
-    [new Vector(4, 2), -1],
-    [new Vector(-1, 2), 1],
+    [new Vector(-2, 3, 0), -1],
+    [new Vector(4, 2), 1],
+    [new Vector(-1, 2), -1],
     [new Vector(2, -2), 1],
-    [new Vector(4.5, 3), -1]
+    [new Vector(4.5, 3), 1]
     
   ];
-*/
-let trainingData = [];
+
+//let trainingData = [];
 let testingData = [];
 
 function runPerceptron() {
   training = true;
   training_size = Number(document.getElementById("training_size").value);
-  trainingData = create_data(training_size)
+  //trainingData = create_data(training_size)
   //weightVector = new Vector(0,0,0);
   //const learningRate = 0.5;
   weight_v_x = Number(document.getElementById("w_v_x").value);
@@ -104,6 +104,7 @@ function testPerceptron() {
     let percent_correct = numb_correct / testingData.length;
     let output_percent = document.getElementById("percent_correct")
     output_percent.innerHTML = "Percent Correct: " + percent_correct*100; 
+    console.log("percent correct:" + percent_correct*100);
     console.log("finished testing perceptron");
     ctx.clearRect(0, 0, 500, 500);
     graphAxis();
