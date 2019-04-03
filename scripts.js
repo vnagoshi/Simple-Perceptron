@@ -7,7 +7,7 @@ let goToY = 0;
 let xPerp = 0;
 let yPerp = 0;
 let training = true;
-
+/*
 let trainingData = [
     [new Vector(-1, 1.5, 0), -1],
     [new Vector(4, 3, 0), 1],
@@ -20,14 +20,23 @@ let trainingData = [
     [new Vector(4.5, 3), 1]
     
   ];
-
-//let trainingData = [];
+*/
+let trainingData = [];
+/*
+let trainingData = [
+    [new Vector(1, 1, 0), 1],
+    [new Vector(1, -1, 0), 1],
+    [new Vector(-1, 1, 0), 1],
+    [new Vector(-1, -1, 0), -1],
+    
+  ];
+*/
 let testingData = [];
 
 function runPerceptron() {
   training = true;
   training_size = Number(document.getElementById("training_size").value);
-  //trainingData = create_data(training_size)
+  trainingData = create_data(training_size)
   //weightVector = new Vector(0,0,0);
   //const learningRate = 0.5;
   weight_v_x = Number(document.getElementById("w_v_x").value);
@@ -257,7 +266,9 @@ function create_data(data_points){
         y = (10*Math.random()) - 5
         points.push([new Vector(x, y, 0), 0])
     }
-    data = make_labels(points);
+    //data = make_labels(points);
+    data = make_and_labels(points);
+    //data = make_or_labels(points);
     return data;
 }
 
@@ -269,6 +280,40 @@ function make_labels(data){
         let y = data[i][0].y;
         
         if(x >= y) {
+            data[i][1] = 1
+        }else{
+            data[i][1] = -1
+        }
+    }
+    return labeled_data;
+}
+
+function make_and_labels(data){
+    let labeled_data = data
+    threshold = 2;
+    for(let i=0; i<data.length; i++){
+        
+        let x = data[i][0].x;
+        let y = data[i][0].y;
+        
+        if(x >= threshold && y >= threshold) {
+            data[i][1] = 1
+        }else{
+            data[i][1] = -1
+        }
+    }
+    return labeled_data;
+}
+
+function make_or_labels(data){
+    let labeled_data = data
+    threshold = 2;
+    for(let i=0; i<data.length; i++){
+        
+        let x = data[i][0].x;
+        let y = data[i][0].y;
+        
+        if(x + y >= threshold) {
             data[i][1] = 1
         }else{
             data[i][1] = -1
