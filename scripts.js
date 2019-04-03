@@ -269,6 +269,7 @@ function create_data(data_points){
     //data = make_labels(points);
     data = make_and_labels(points);
     //data = make_or_labels(points);
+    data = make_xor_labels(points);
     return data;
 }
 
@@ -314,6 +315,23 @@ function make_or_labels(data){
         let y = data[i][0].y;
         
         if(x + y >= threshold) {
+            data[i][1] = 1
+        }else{
+            data[i][1] = -1
+        }
+    }
+    return labeled_data;
+}
+
+function make_xor_labels(data){
+    let labeled_data = data
+    threshold = 2;
+    for(let i=0; i<data.length; i++){
+        
+        let x = data[i][0].x;
+        let y = data[i][0].y;
+        
+        if((x>=threshold && y<threshold) || (x<threshold && y>=threshold) ) {
             data[i][1] = 1
         }else{
             data[i][1] = -1
