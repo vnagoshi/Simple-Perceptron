@@ -24,7 +24,7 @@ let trainingData = [
 let trainingData = [];
 /*
 let trainingData = [
-    [new Vector(1, 1, 0), 1],
+    [new Vector(1, 1, 0), -1],
     [new Vector(1, -1, 0), 1],
     [new Vector(-1, 1, 0), 1],
     [new Vector(-1, -1, 0), -1],
@@ -266,10 +266,10 @@ function create_data(data_points){
         y = (10*Math.random()) - 5
         points.push([new Vector(x, y, 0), 0])
     }
-    //data = make_labels(points);
-    data = make_and_labels(points);
+    data = make_labels(points);
+    //data = make_and_labels(points);
     //data = make_or_labels(points);
-    data = make_xor_labels(points);
+    //data = make_xor_labels(points)
     return data;
 }
 
