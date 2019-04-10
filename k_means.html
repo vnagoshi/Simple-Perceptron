@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>K Means Clustering</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+  <script src="charts/plotly-latest.min.js"></script>  
+  <script src="charts/error_chart.js"></script>
+  <script src="Vector.js"></script>
+  <script src="k_means.js"></script>
+</head>
+<body>
+  
+  <div class="container">
+    <h3 class="text-center my-3">K Means Clustering</h3>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Number of Clusters</span>
+      </div>
+      <input id="clusters" type="number" value=3 placeholder="Number of Clusters" class="form-control">
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Number of Data points</span>
+      </div>
+      <input id="dataPoints" type="number" value=100 placeholder="Number of data points" class="form-control">
+    </div>
+    <button type="button" class="btn btn-primary" onclick="showPoints()">Make Data</button>
+    <button type="button" class="btn btn-primary" onclick="cluster()">Cluster</button>
+  </div>
+
+  <div class="container text-center">
+    <h5>K means clustering</h5>
+    <canvas id="ctx" height="500px" width="500px" style="border: 1px solid black" onClick="handleMouseDown(event)"></canvas>
+    <p>Click on the plot to move the weight vector's position</p>
+  </div>
+
+    
+  <script>
+
+  </script>
+</body>
+</html>
