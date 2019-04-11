@@ -59,7 +59,7 @@ function cluster(){
     ctx.clearRect(0, 0, 500, 500);
     graphData(centers,6);
     graphData(data,3);
-    
+    graphAxis()
 }
 
 
