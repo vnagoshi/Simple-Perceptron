@@ -131,11 +131,23 @@ function getColor(point){
 function create_data(data_points){
     let points = []
     for(let i =0; i<data_points; i++){    
-        x = (10*Math.random()) - 5
-        y = (10*Math.random()) - 5
+    	if(Math.random() > 0.33){    	
+			x = setRange(-5,-4)
+			y = setRange(-5,-4)
+        }else if(Math.random() > 0.66){
+        	x = setRange(-1,1)
+			y = setRange(-1,1)
+        }else{
+        	x = setRange(4,5)
+			y = setRange(4,5)
+        }
         points.push([new Vector(x, y, 0), 0 ])
     }
     return points;
+}
+
+function setRange(min, max){
+	return (Math.random() * ((max - min) + 1)) + min
 }
 
 function create_cluster_centers(data_points){
