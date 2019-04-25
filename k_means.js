@@ -50,18 +50,19 @@ function cluster(){
                 avgX += groups[l][m][0].x;
                 avgY += groups[l][m][0].y
             }
-            if(l == 0){
-            console.log(centers[l]);
-				console.log("original x: " + centers[l][0].x);
-				console.log("updated x: " + avgX);
-				console.log("original y: " + centers[l][0].y);
-				console.log("updated y: "+ avgY);
+			if(groups[l].length != 0){
+				avgX = avgX / groups[l].length;
+				avgY = avgY / groups[l].length;
+				centers[l][0].x = avgX;
+				centers[l][0].y = avgY;
+            }else{
+            	centers[l][0].x = 0;
+				centers[l][0].y = 0;
             }
-            avgX = avgX / groups[l].length;
-            avgY = avgY / groups[l].length;
-            centers[l][0].x = avgX;
-            centers[l][0].y = avgY;
         }
+    }
+    for(let p=0; p<centers.length; p++){
+    	console.log(centers[p][0]);
     }
     console.log("done!");
     ctx.clearRect(0, 0, 500, 500);
