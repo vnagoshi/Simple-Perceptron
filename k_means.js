@@ -1,10 +1,11 @@
 
 let ctx;
 let data = [];
+let centers = [];
 
 function cluster(){
     let clusters = document.getElementById("clusters").value;
-    let centers = create_cluster_centers(clusters);
+    //let centers = create_cluster_centers(clusters);
     
     let xDist = 0;
     let yDist = 0;
@@ -46,20 +47,36 @@ function cluster(){
             let avgX = 0;
             let avgY = 0;
             for(let m=0; m<groups[l].length; m++){
-                avgX += groups[l][m].x;
-                avgY += groups[l][m].y
+                avgX += groups[l][m][0].x;
+                avgY += groups[l][m][0].y
+            }
+            if(l == 0){
+            console.log(centers[l]);
+				console.log("original x: " + centers[l][0].x);
+				console.log("updated x: " + avgX);
+				console.log("original y: " + centers[l][0].y);
+				console.log("updated y: "+ avgY);
             }
             avgX = avgX / groups[l].length;
             avgY = avgY / groups[l].length;
-            centers[l].x = avgX;
-            centers[l].y = avgY;
+            centers[l][0].x = avgX;
+            centers[l][0].y = avgY;
         }
     }
     console.log("done!");
     ctx.clearRect(0, 0, 500, 500);
     graphData(centers,6);
     graphData(data,3);
-    graphAxis()
+    graphAxis();
+}
+
+function placeCenters(){
+	let clusters = document.getElementById("clusters").value;
+    let centers = create_cluster_centers(clusters);
+	ctx.clearRect(0, 0, 500, 500);
+	graphData(centers,6);
+    graphAxis();
+    graphData(data,3);
 }
 
 
@@ -131,10 +148,11 @@ function getColor(point){
 function create_data(data_points){
     let points = []
     for(let i =0; i<data_points; i++){    
-    	if(Math.random() > 0.33){    	
+    	let rand_val = Math.random();
+    	if(rand_val < 0.33){    	
 			x = setRange(-5,-4)
 			y = setRange(-5,-4)
-        }else if(Math.random() > 0.66){
+        }else if(rand_val < 0.66){
         	x = setRange(-1,1)
 			y = setRange(-1,1)
         }else{
@@ -157,6 +175,7 @@ function create_cluster_centers(data_points){
         y = (10*Math.random()) - 5
         points.push([new Vector(x, y, 0),i])
     }
+    centers = points;
     return points;
 }
 
